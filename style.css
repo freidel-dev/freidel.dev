@@ -89,6 +89,13 @@ footer {
     z-index: 1;
 }
 
+/* Pin the navbar to the top of the screen */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
 /* Text bubbles: content sits on translucent acrylic panels above the tubes.
    Side margin grows with the screen: 1rem on phones, up to 5rem on wide monitors */
 main {
