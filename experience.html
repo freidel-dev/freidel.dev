@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Experience | Garrett Freidel</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Mono:wght@300..700&family=Silkscreen&display=swap">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <!-- Animated background -->
+        <div class="tubes-bg" aria-hidden="true"><canvas id="tubes-canvas"></canvas></div>
+
+        <!-- Navigation Bar -->
+        <nav aria-label="Navigation Menu">
+            <a href="index.html">Home</a>
+            <a href="experience.html" class="active" aria-current="page">Experience</a>
+            <a href="lab.html">Lab</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <main>
+            <h1>Experience</h1>
+            <p>Where I've worked and what I've done there.</p>
+
+            <h2>Work</h2>
+            <div class="card-grid">
+                <article class="card">
+                    <h3>Systems Administrator</h3>
+                    <span class="meta">Northwest Respiratory Services &middot; Dec 2024 – Jun 2026</span>
+                    <p>Supported 400+ users while keeping the environment HIPAA and PCI DSS compliant.
+                        Cut help-desk backlog by over 50% through automation, reduced cloud spend by ~25%,
+                        and stood up SIEM/SOAR monitoring, phishing-resistant MFA, and a Cisco-to-FortiGate
+                        firewall migration.</p>
+                    <ul class="tags">
+                        <li>Microsoft 365</li>
+                        <li>Entra ID</li>
+                        <li>FortiGate</li>
+                        <li>Wazuh</li>
+                        <li>PowerShell</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <h3>IoT Network Engineer</h3>
+                    <span class="meta">Procellis Technology &middot; Apr 2022 – Dec 2024</span>
+                    <p>Designed, deployed, and maintained secure wired and wireless IoT infrastructure
+                        for partners and customers, and met SLA goals through ITSM platforms.</p>
+                    <ul class="tags">
+                        <li>TCP/IP</li>
+                        <li>VPN / IPSec</li>
+                        <li>ConnectWise</li>
+                        <li>Kaseya</li>
+                    </ul>
+                </article>
+            </div>
+
+            <h2>Education</h2>
+            <div class="card-grid">
+                <article class="card">
+                    <h3>B.S. Cybersecurity &amp; Information Assurance</h3>
+                    <span class="meta">Western Governors University &middot; May 2026</span>
+                </article>
+
+                <article class="card">
+                    <h3>Certifications</h3>
+                    <ul class="tags">
+                        <li>CompTIA Network+</li>
+                        <li>Security+</li>
+                        <li>CySA+</li>
+                        <li>PenTest+</li>
+                        <li>Project+</li>
+                        <li>ISC2 SSCP</li>
+                        <li>ITIL 4 Foundation</li>
+                    </ul>
+                </article>
+            </div>
+        </main>
+
+        <footer>&copy; 2026 2026 FREIDEL.DEV (Garrett Freidel) &middot; Tubes effect by <a href="https://codepen.io/soju22/pen/qEbdVjK">Kevin Levron</a></footer>
+
+        <script type="module" src="tubes.js"></script>
+    </body>
+</html>

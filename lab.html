@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lab | Garrett Freidel</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Mono:wght@300..700&family=Silkscreen&display=swap">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <!-- Animated background -->
+        <div class="tubes-bg" aria-hidden="true"><canvas id="tubes-canvas"></canvas></div>
+
+        <!-- Navigation Bar -->
+        <nav aria-label="Navigation Menu">
+            <a href="index.html">Home</a>
+            <a href="experience.html">Experience</a>
+            <a href="lab.html" class="active" aria-current="page">Lab</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <main>
+            <h1>Lab</h1>
+            <p>My home lab: a Proxmox server (Ryzen 9 5900XT, 128 GB RAM, RAID storage) in a
+                3D-printed rack, where I practice the skills I use on the job.</p>
+
+            <div class="card-grid">
+                <article class="card">
+                    <h3>Home SOC</h3>
+                    <p>A Wazuh SIEM running a tuned SOCFortress ruleset, integrated with Shuffle for
+                        SOAR automation and TheHive for automatic case creation and incident tracking.</p>
+                    <ul class="tags">
+                        <li>Wazuh</li>
+                        <li>Shuffle</li>
+                        <li>TheHive</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <h3>Identity &amp; Infrastructure</h3>
+                    <p>Windows Server 2025 handling authentication, security policy, DNS, and an
+                        internal CA for TLS across my services, with hybrid AD through Microsoft 365
+                        Business Premium and software-defined networking for secure outside access.</p>
+                    <ul class="tags">
+                        <li>Windows Server 2025</li>
+                        <li>Hybrid AD</li>
+                        <li>PKI</li>
+                        <li>Proxmox</li>
+                    </ul>
+                </article>
+            </div>
+        </main>
+
+        <footer>&copy; 2026 FREIDEL.DEV (Garrett Freidel) &middot; Tubes effect by <a href="https://codepen.io/soju22/pen/qEbdVjK">Kevin Levron</a></footer>
+
+        <script type="module" src="tubes.js"></script>
+    </body>
+</html>
