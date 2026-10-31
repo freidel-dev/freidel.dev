@@ -8,11 +8,9 @@ services:
     environment:
       # Local default is plain HTTP. For production, create a .env file next to
       # this one containing: SITE_ADDRESS=freidel.dev
-      SITE_ADDRESS: ${SITE_ADDRESS:-:80}
+      SITE_ADDRESS: ${SITE_ADDRESS:-:8080}
     ports:
-      - "80:80"      # HTTP (also used for Let's Encrypt validation and HTTPS redirect)
-      - "443:443"    # HTTPS
-      - "443:443/udp" # HTTP/3 (QUIC)
+      - "8080:8080"      # HTTP (also used for Let's Encrypt validation and HTTPS redirect)
     volumes:
       # Persist certificates, otherwise every rebuild re-requests them
       # and you can hit Let's Encrypt rate limits
