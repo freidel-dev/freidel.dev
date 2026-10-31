@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+*.log
+
+# Secrets and local environment settings
+.env
+.env.*
+
+# OS clutter
+Thumbs.db
+desktop.ini
+.DS_Store
