@@ -1,0 +1,31 @@
+# The site address comes from an environment variable so the same file works
+# locally and in production:
+#   - unset            -> ":80"        (plain HTTP on port 80, for local testing)
+#   - SITE_ADDRESS=freidel.dev -> Caddy requests and renews a Let's Encrypt
+#                                 certificate automatically and serves HTTPS
+{$SITE_ADDRESS::80} {
+	# Where the site files live inside the container (see the Dockerfile COPY line)
+	root * /srv
+	file_server
+
+	# Compress responses (zstd for modern browsers, gzip as fallback)
+	encode zstd gzip
+
+	header {
+		# Don't let browsers guess content types
+		X-Content-Type-Options nosniff
+		# Don't send the full URL to other sites when users click away
+		Referrer-Policy strict-origin-when-cross-origin
+		# Forbid other sites from embedding yours in an iframe
+		X-Frame-Options DENY
+		# Remove Caddy's version banner
+		-Server
+	}
+
+	# Cache static assets for a day; HTML is revalidated so edits show up quickly
+	@assets path *.css *.js
+	header @assets Cache-Control "public, max-age=86400"
+
+	# Log to stdout so `docker compose logs` shows requests
+	log
+}
