@@ -3,8 +3,9 @@
     --ink: #0F110C;    /* warm dark: body text, tubes backdrop */
     --ink-raised: #16161C; /* a hair lighter than ink, faintly cool: nav background */
     --deep: #0B0014;   /* cold dark: headings, text over warm colors */
+    --deeper: #08000A;   /* cold dark: headings, text over warm colors */
     --cream: #F5E9E2;  /* off-white: page background */
-    --blush: #E3B5A4;  /* warm accent: cards, tags, hovers */
+    --blush: #FFDCAA;  /* warm accent: cards, tags, hovers */
     --red: #CC2936;    /* strong accent: active links, buttons */
 
     /* Retro bands: red to orange, inspired by Rust's "Project Nova" door */
@@ -32,8 +33,8 @@
 
 /* Dark backdrop so the tubes can glow; content sits on cream bubbles */
 body {
-    background-color: var(--ink);
-    color: var(--ink);
+    background-color: var(--deep);
+    color: var(--deeper);
     margin: 0;
     /* Fill the window: the tubes track the mouse only while it's over <body> */
     min-height: 100vh;
@@ -44,7 +45,7 @@ body {
 }
 
 h1, h2, h3 {
-    color: var(--deep);
+    color: var(--cream);
     line-height: 1.2;
 }
 
@@ -61,7 +62,7 @@ h2 {
 }
 
 p {
-    color: var(--ink);
+    color: var(--cream);
     max-width: 75ch; /* keep long lines readable on wide screens */
 }
 
@@ -88,7 +89,7 @@ footer {
     z-index: 1;
 }
 
-/* Text bubbles: content sits on translucent cream panels above the tubes.
+/* Text bubbles: content sits on translucent acrylic panels above the tubes.
    Side margin grows with the screen: 1rem on phones, up to 5rem on wide monitors */
 main {
     margin: 2.5rem var(--gutter) 0;
@@ -96,26 +97,29 @@ main {
     border-radius: 12px;
 }
 
-/* Acrylic material (like Windows 11 / macOS): translucent cream tint, heavy blur
-   with boosted saturation, faint grain, a light edge highlight, and a soft shadow */
+/* Acrylic material (like Windows 11 / macOS): translucent navbar-colored tint,
+   heavy blur with boosted saturation, faint grain, and a soft shadow */
 main,
 footer {
-    background-color: rgba(245, 233, 226, 0.8);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.11'/%3E%3C/svg%3E");
+    /* Navbar color at 10% opacity; raise the % for a more solid panel */
+    background-color: color-mix(in srgb, var(--deeper) 35%, transparent);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='6' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
     -webkit-backdrop-filter: blur(28px) saturate(180%);
     backdrop-filter: blur(28px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.45);
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--ink-raised);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
 }
 
 a {
     color: var(--red);
+    transition: --boost 0.25s ease, color 0.25s ease;
 }
 
-a:hover {
-    color: var(--deep);
+/* Tight dark shadow so red links don't blend into the blurred tube glow.
+   Replaced by the flame glow on hover */
+main a:not(.button, .card a),
+footer a {
+    text-shadow: 0 1px 2px rgb(0 0 0 / 0.5);
 }
 
 /* Navigation */
@@ -139,7 +143,8 @@ nav::after {
     background: var(--bands-stacked);
 }
 
-/* Flame glow on nav links: --flicker is animated, --boost rises on hover */
+/* Flame glow: always on for nav links, hover-only for links on the dark panels
+   (not card links or buttons; buttons get their own glow below). --flicker is animated, --boost rises on hover */
 @property --flicker {
     syntax: "<number>";
     inherits: false;
@@ -156,13 +161,17 @@ nav a {
     color: var(--cream);
     font-family: "Silkscreen", "Red Hat Mono", monospace;
     text-decoration: none;
+}
+
+nav a,
+main a:not(.button, .card a):hover,
+footer a:hover {
     /* Amber core, orange middle, red outer glow (band colors) */
     text-shadow:
         0 0 calc(2px * var(--flicker) * var(--boost)) rgb(242 154 46 / calc(0.8 * var(--flicker))),
         0 0 calc(6px * var(--flicker) * var(--boost)) rgb(227 94 42 / calc(0.6 * var(--flicker))),
         0 -2px calc(12px * var(--flicker) * var(--boost)) rgb(204 41 54 / calc(0.5 * var(--flicker)));
     animation: flame-flicker 2.4s linear infinite;
-    transition: --boost 0.25s ease, color 0.25s ease;
 }
 
 /* Offset each link so they don't flicker in sync */
@@ -183,8 +192,10 @@ nav a.active:hover {
     text-shadow: 0 0 6px rgb(204 41 54 / 0.8);
 }
 
-/* Pale orange, close to the old tan's brightness so it stays readable on the dark nav */
-nav a:hover {
+/* Pale orange, close to the old tan's brightness so it stays readable on dark backgrounds */
+nav a:hover,
+main a:not(.button, .card a):hover,
+footer a:hover {
     color: #FFDCAA;
     --boost: 2.6;
 }
@@ -206,7 +217,9 @@ nav a:hover {
 
 /* No flicker for visitors who prefer reduced motion; the glow stays steady */
 @media (prefers-reduced-motion: reduce) {
-    nav a {
+    nav a,
+    main a,
+    footer a {
         animation: none;
     }
 }
@@ -236,6 +249,7 @@ nav a:hover {
 }
 
 .card h3 {
+    color: var(--deep);
     margin: 0 0 0.25rem;
 }
 
@@ -276,6 +290,12 @@ nav a:hover {
     border-radius: 999px;
 }
 
+/* Tags sitting directly on a dark panel (not inside a card) */
+main > .tags li {
+    background-color: var(--blush);
+    color: var(--deep);
+}
+
 /* Buttons */
 .button {
     display: inline-block;
@@ -285,11 +305,19 @@ nav a:hover {
     border-radius: 6px;
     text-decoration: none;
     font-weight: bold;
+    transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 }
 
+/* On hover the button fills with the nav/link hover orange, and its edges get the
+   flickering flame glow. No glow when not hovered */
 .button:hover {
-    background-color: var(--deep);
-    color: var(--cream);
+    background-color: #FFDCAA;
+    color: var(--deep); /* dark text so it stays readable on the pale orange */
+    box-shadow:
+        0 0 calc(4px * var(--flicker)) rgb(242 154 46 / calc(0.8 * var(--flicker))),
+        0 0 calc(12px * var(--flicker)) rgb(227 94 42 / calc(0.6 * var(--flicker))),
+        0 -2px calc(24px * var(--flicker)) rgb(204 41 54 / calc(0.5 * var(--flicker)));
+    animation: flame-flicker 2.4s linear infinite;
 }
 
 /* Contact */
@@ -303,7 +331,7 @@ nav a:hover {
 }
 
 .contact-list strong {
-    color: var(--deep);
+    color: var(--cream);
     display: inline-block;
     min-width: 6rem;
 }
@@ -314,5 +342,49 @@ footer {
     padding: 0.5rem 1.25rem;
     border-radius: 12px;
     font-size: 0.85rem;
-    color: var(--ink);
+    color: var(--cream);
+}
+
+/* Page transitions (cross-document view transitions): when switching pages the
+   main and footer panels fade out, then slide in from the right. The nav stays put.
+   Browsers without support just switch pages normally */
+@view-transition {
+    navigation: auto;
+}
+
+main   { view-transition-name: main-panel; }
+footer { view-transition-name: footer-panel; }
+
+/* Old page: panels fade out */
+::view-transition-old(main-panel),
+::view-transition-old(footer-panel) {
+    animation: panel-fade-out 0.2s ease-in both;
+}
+
+/* New page: panels slide in from the right after the fade */
+::view-transition-new(main-panel),
+::view-transition-new(footer-panel) {
+    animation: panel-slide-in 0.35s ease-out 0.2s both;
+}
+
+/* Don't morph panel size between pages of different heights */
+::view-transition-group(main-panel),
+::view-transition-group(footer-panel) {
+    animation: none;
+}
+
+@keyframes panel-fade-out {
+    to { opacity: 0; }
+}
+
+@keyframes panel-slide-in {
+    from { opacity: 0; transform: translateX(60px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none;
+    }
 }
