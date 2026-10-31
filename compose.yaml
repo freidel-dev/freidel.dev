@@ -6,14 +6,16 @@ services:
     # Restart after crashes and after the host reboots (unless you stopped it)
     restart: unless-stopped
     environment:
-      # Local default is plain HTTP. For production, create a .env file next to
-      # this one containing: SITE_ADDRESS=freidel.dev
-      SITE_ADDRESS: ${SITE_ADDRESS:-:8080}
+      # nginx terminates HTTPS in front of this container, so Caddy serves plain
+      # HTTP on port 80 inside the container (no certificates, no redirects).
+      # Set here, not read from .env, so a stray .env can't switch HTTPS back on.
+      SITE_ADDRESS: ":80"
     ports:
-      - "8080:8080"      # HTTP (also used for Let's Encrypt validation and HTTPS redirect)
+      # host 127.0.0.1:8080 -> container port 80
+      # Bound to loopback so only programs on this machine (nginx) can reach it,
+      # not the internet. If nginx runs on a different machine, use "8080:80".
+      - "127.0.0.1:8080:80"
     volumes:
-      # Persist certificates, otherwise every rebuild re-requests them
-      # and you can hit Let's Encrypt rate limits
       - caddy_data:/data
       - caddy_config:/config
 
